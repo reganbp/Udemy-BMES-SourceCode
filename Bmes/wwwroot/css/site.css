@@ -1,37 +1,74 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
-for details on configuring this project to bundle and minify static web assets. */
-body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿body {
+    padding: 0px;
+    margin: 0px;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
+form {
+    padding: 0px;
+    margin: 0px;
+}
+
+/* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
 }
 
-/* QR code generator */
-#qrCode {
-    margin: 15px;
+.field-validation-valid {
+    display: none;
 }
 
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/*Pagination Color*/
+.custom-pagination .pagination > li > a,
+.custom-pagination .pagination > li > span {
+    border: 1px solid purple;
+    color: purple;
+}
+
+.pagination > li.active > span {
+    background-color: purple;
+    color: #fff;
+}
+
+    .pagination > li.active > span:hover {
+        background-color: #a64ca6;
+        border: 1px solid #a64ca6;
+        color: white;
     }
+
+/*Equal Heights*/
+
+.row.display-flex {
+    display: flex;
+    flex-wrap: wrap;
 }
+
+    .row.display-flex > [class*='col-'] {
+        display: flex;
+        flex-direction: column;
+    }

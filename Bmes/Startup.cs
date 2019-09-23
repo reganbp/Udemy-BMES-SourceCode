@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Bmes.Database;
+using Bmes.Repositories;
+using Bmes.Repositories.Implementations;
+using Bmes.Services;
+using Bmes.Services.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,8 +36,16 @@ namespace Bmes
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDbContext<BmesDbContext>(options => options.UseSqlite(Configuration["Data:BmesWebApp:ConnectionString"]));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IBrandRepository, BrandRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+
+            services.AddTransient<ICatalogueService, CatalogueService>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,10 +55,7 @@ namespace Bmes
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -52,8 +63,33 @@ namespace Bmes
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: null,
+                    template: "catalogue/{category_slug}/{brand_slug}/page{page:int}", 
+                    defaults: new { controller = "Catalogue", action = "Index" }
+                );
+                routes.MapRoute(
+                    name: null,
+                    template: "page{page:int}",
+                    defaults: new
+                    {
+                        controller = "Catalogue",
+                        action = "Index",
+                        productPage = 1
+                    }
+                );
+                routes.MapRoute(
+                    name: null,
+                    template: "catalogue/{category_slug}/{brand_slug}",
+                    defaults: new
+                    {
+                        controller = "Catalogue",
+                        action = "Index",
+                        productPage = 1
+                    }
+                );
+                routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Catalogue}/{action=Index}/{id?}");
             });
         }
     }
