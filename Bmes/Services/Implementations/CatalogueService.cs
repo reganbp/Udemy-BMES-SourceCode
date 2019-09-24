@@ -79,6 +79,7 @@ namespace Bmes.Services.Implementations
 
             int[] pages = Enumerable.Range(1, totalPages).ToArray();
 
+
             var pagedProduct = new PaginationViewModel
             {
                 Products = products,
@@ -106,7 +107,7 @@ namespace Bmes.Services.Implementations
                 var pathValues = _httpContext.Request.Path.Value.Split('/');
                 var pageFragment = pathValues[pathValues.Length - 1];
 
-                if (!string.IsNullOrWhiteSpace(pageFragment)) //page4
+                if (!string.IsNullOrWhiteSpace(pageFragment) && pageFragment.Contains("page")) //page4
                 {
                     var pageNumber = pageFragment.Last().ToString();
                     defaultPage = Convert.ToInt32(pageNumber);

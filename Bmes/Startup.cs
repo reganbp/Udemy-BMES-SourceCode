@@ -32,18 +32,23 @@ namespace Bmes
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             services.AddDbContext<BmesDbContext>(options => options.UseSqlite(Configuration["Data:BmesWebApp:ConnectionString"]));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMemoryCache();
+            services.AddSession();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IBrandRepository, BrandRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<ICartRepository, CartRepository>();
+            services.AddTransient<ICartItemRepository, CartItemRepository>();
 
             services.AddTransient<ICatalogueService, CatalogueService>();
+            services.AddTransient<ICartService, CartService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
@@ -58,6 +63,7 @@ namespace Bmes
             
 
             app.UseStaticFiles();
+            app.UseSession();
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>
@@ -73,8 +79,7 @@ namespace Bmes
                     defaults: new
                     {
                         controller = "Catalogue",
-                        action = "Index",
-                        productPage = 1
+                        action = "Index"
                     }
                 );
                 routes.MapRoute(
@@ -83,8 +88,7 @@ namespace Bmes
                     defaults: new
                     {
                         controller = "Catalogue",
-                        action = "Index",
-                        productPage = 1
+                        action = "Index"
                     }
                 );
                 routes.MapRoute(
