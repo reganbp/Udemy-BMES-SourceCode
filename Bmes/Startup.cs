@@ -46,9 +46,15 @@ namespace Bmes
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ICartRepository, CartRepository>();
             services.AddTransient<ICartItemRepository, CartItemRepository>();
+            services.AddTransient<IAddressRepository, AddressRepository>();
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<IPersonRepository, PersonRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IOrderItemRepository, OrderItemRepository>();
 
             services.AddTransient<ICatalogueService, CatalogueService>();
             services.AddTransient<ICartService, CartService>();
+            services.AddTransient<ICheckoutService, CheckoutService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }

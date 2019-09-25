@@ -3,14 +3,16 @@ using System;
 using Bmes.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bmes.Migrations
 {
     [DbContext(typeof(BmesDbContext))]
-    partial class BmesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190925092106_ModelsUpdate")]
+    partial class ModelsUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,64 +116,6 @@ namespace Bmes.Migrations
                     b.HasIndex("PersonId");
 
                     b.ToTable("Customers");
-                });
-
-            modelBuilder.Entity("Bmes.Models.Order.Order", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<long>("AddressId");
-
-                    b.Property<DateTimeOffset>("CreateDate");
-
-                    b.Property<long>("CustomerId");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTimeOffset>("ModifiedDate");
-
-                    b.Property<decimal>("OrderItemTotal");
-
-                    b.Property<int>("OrderStatus");
-
-                    b.Property<decimal>("OrderTotal");
-
-                    b.Property<decimal>("ShippingCharge");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("Bmes.Models.Order.OrderItem", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTimeOffset>("CreateDate");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTimeOffset>("ModifiedDate");
-
-                    b.Property<long>("OrderId");
-
-                    b.Property<long>("ProductId");
-
-                    b.Property<int>("Quantity");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Bmes.Models.Product.Brand", b =>
@@ -339,32 +283,6 @@ namespace Bmes.Migrations
                     b.HasOne("Bmes.Models.Shared.Person", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Bmes.Models.Order.Order", b =>
-                {
-                    b.HasOne("Bmes.Models.Address.Address", "DeliveryAddress")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Bmes.Models.Customer.Customer", "Customer")
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Bmes.Models.Order.OrderItem", b =>
-                {
-                    b.HasOne("Bmes.Models.Order.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Bmes.Models.Product.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
