@@ -14,18 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Database\Data\" />
     <Folder Include="wwwroot\images\productimages\thumbnails\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Database\Data\Products.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Database\Data\Products.csv">
+    <None Update="Database\Data\csv\Products.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
