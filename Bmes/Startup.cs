@@ -36,7 +36,7 @@ namespace Bmes
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<BmesDbContext>(options => options.UseSqlite(Configuration["Data:BmesWebApp:ConnectionString"]));
+            services.AddDbContext<BmesDbContext>(options => options.UseSqlServer(Configuration["Data:BmesWebApp:ConnectionString"]));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMemoryCache();
