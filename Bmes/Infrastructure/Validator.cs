@@ -7,5 +7,6 @@ namespace Bmes.Infrastructure
 {
     public class Validator
     {
+        public string Name { get; set; }
     }
 }
